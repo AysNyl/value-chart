@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "serve:quotes": "npx json-server --watch ./_data/check.json --port 4000",
+    "serve:news": "npx json-server --watch ./_data/news.json --port 5000",
+    "serve:all": "concurrently \"npm run serve:quotes\" \"npm run serve:news\"",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

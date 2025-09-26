@@ -246,14 +246,14 @@ export function ChartAreaInteractive() {
                             }
                         />
                         <Area
-                            dataKey="CH_PREVIOUS_CLS_PRICE"
+                            dataKey="CH_CLOSING_PRICE"
                             type="natural"
                             fill="url(#fillMobile)"
                             stroke="var(--color-mobile)"
                             stackId="a"
                         />
                         <Area
-                            dataKey="CH_CLOSING_PRICE"
+                            dataKey="indicator"
                             type="natural"
                             fill="url(#fillDesktop)"
                             stroke="var(--color-desktop)"

@@ -26,9 +26,23 @@ interface Data {
 };
 
 async function getData(): Promise<Data[]>  {
-  const result = await fetch('http://localhost:4000/data');
-
-  return result.json();
+  const quotes = await fetch('http://localhost:4000/data');
+  const news = await fetch('http://localhost:5000/news');
+  const result = await quotes.json()
+  const result1 = await news.json()
+  result.forEach((quote) => {
+    const matchingDate = result1.find(news => news.date == quote.CH_TIMESTAMP);
+    if (matchingDate) {
+      quote.news = matchingDate.news;
+      quote.indicator = quote.CH_CLOSING_PRICE;
+    }
+    else {
+      quote.news = "";
+      quote.indicator = 0;
+    }
+  })
+  console.log(result);
+  return result;
 }
 
 export default getData;
