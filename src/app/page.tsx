@@ -102,12 +102,14 @@
 //   );
 // }
 
+import { ChartAreaInteractive } from "@/components/chart-area-interactive";
 import { Component } from "@/components/example-chart";
 
 const TestChart = () => {
   return (
     <div>
-      <Component></Component>
+      {/* <Component></Component> */}
+      <ChartAreaInteractive></ChartAreaInteractive>
     </div>
   );
 };

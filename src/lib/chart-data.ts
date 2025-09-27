@@ -8,24 +8,32 @@
 // export default ChartData;
 
 interface Data {
-    CH_SYMBOL: string,
-    CH_SERIES: string,
-    CH_TIMESTAMP: string,
-    CH_PREVIOUS_CLS_PRICE: number,
-    CH_OPENING_PRICE: number,
-    CH_TRADE_HIGH_PRICE: number,
-    CH_TRADE_LOW_PRICE: number,
-    CH_LAST_TRADED_PRICE: number,
-    CH_CLOSING_PRICE: number,
-    VWAP: number,
-    CH_TOT_TRADED_QTY: number,
-    CH_TOT_TRADED_VAL: number,
-    CH_TOTAL_TRADES: number,
-    CH_52WEEK_HIGH_PRICE: number,
-    CH_52WEEK_LOW_PRICE: number
+  CH_SYMBOL: string,
+  CH_SERIES: string,
+  CH_TIMESTAMP: string,
+  CH_PREVIOUS_CLS_PRICE: number,
+  CH_OPENING_PRICE: number,
+  CH_TRADE_HIGH_PRICE: number,
+  CH_TRADE_LOW_PRICE: number,
+  CH_LAST_TRADED_PRICE: number,
+  CH_CLOSING_PRICE: number,
+  VWAP: number,
+  CH_TOT_TRADED_QTY: number,
+  CH_TOT_TRADED_VAL: number,
+  CH_TOTAL_TRADES: number,
+  CH_52WEEK_HIGH_PRICE: number,
+  CH_52WEEK_LOW_PRICE: number,
+  new: string,
+  indicator: number;
 };
 
-async function getData(): Promise<Data[]>  {
+interface News {
+  date: string,
+  change: number,
+  event: string,
+};
+
+async function getData(): Promise<[Promise<Data[]>, Promise<News[]>]> {
   const quotes = await fetch('http://localhost:4000/data');
   const news = await fetch('http://localhost:5000/news');
   const result = await quotes.json()
@@ -41,8 +49,8 @@ async function getData(): Promise<Data[]>  {
       quote.indicator = 0;
     }
   })
-  console.log(result);
-  return result;
+  // console.log(result);
+  return [result, result1];
 }
 
 export default getData;

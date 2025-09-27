@@ -13,13 +13,13 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { resolve } from "path";
+import getData from "@/lib/chart-data";
 
 
 export default async function NewsSecton() {
-  const news = await getNews();
+  const news = (await getData())[1];
 
   return (
-    <main>
       <div className="grid grid-cols-3 gap-8">
         {news.map(content => (
           <Card key={content.date} className="flex flex-col justify-between">
@@ -47,6 +47,5 @@ export default async function NewsSecton() {
           </Card>
         ))}
       </div>
-    </main>
   );
 }
