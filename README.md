@@ -2,7 +2,16 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
+First, install all dependencies:
+```bash
+npm install
+```
+Second, launch the json server to serve json files:
+```bash
+npm run serve:all
+```
+
+Then, run the development server:
 
 ```bash
 npm run dev
@@ -18,19 +27,29 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## About the project
 
-## Learn More
+- This project is a stock market news relevancy analyzer application built with Next.js. 
+- It fetches historical stock data with the help of Rest APIs, the related news articles are provided through the html form.
+- It performs AI analysis on the news content to check the relevancy of the news with the targeted stock.
+- And visualizes the data using interactive charts.
+- News are also plotted along with the price movement chart.
+- The application aims to help users make informed investment decisions by providing insights into stock performance and relevant news events.
+- Currently the project is limited to single stock (Tatamotors), future updates will be made to make it more general purpose.
 
-To learn more about Next.js, take a look at the following resources:
+## Note
+- You can fetch stock data By send a API POST request to requests path.
+- New Data need to be provided through the form in the home page.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## API
+- This project uses gemini api key to run relevancy analysis.
+- It can be provided through by creating .env.local file in your project directory,
+with the following contents:
+```text
+GEMINI_API_KEY=your_api_key
+URL=fetch_file_url
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Data
+- The stock data is fetched from nseindia.com (via api)
+- I have also provided some sample data for the project.

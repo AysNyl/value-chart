@@ -14,20 +14,31 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "./ui/textarea"
 import { useState } from "react"
+import { useRef } from "react"
 
 export function NewsCard() {
 
   // const [title, setTitle] = useState("")
-
+  const dateRef = useRef<HTMLInputElement>(null);
+  const titleRef = useRef<HTMLInputElement>(null);
+  const textRef = useRef<string>(" ");
+  
   async function generatePrompt (e: React.FormEvent<HTMLFormElement>) {
+
     e.preventDefault();
-    console.log("-------------------------------------------------------------------hello");
+
     const formData = new FormData(e.currentTarget);
-    const date = formData.get("date");
+    const date = dateRef.current?.value;
     const title = formData.get("title");
     const news = formData.get("news");
     console.log(date, title, news);
-
+    const response = await fetch("/api", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({date: `${date}`, title: `${title}`, text: `${news}`})
+      });
+      
+    window.location.reload();
   }
 
   return (
@@ -48,6 +59,7 @@ export function NewsCard() {
               <Label htmlFor="date">Date</Label>
               <Input
                 name="date"
+                ref={dateRef}
                 id="date"
                 type="date"
                 placeholder="YYYY/MM/DD"
@@ -59,6 +71,7 @@ export function NewsCard() {
               <Label htmlFor="title">Title</Label>
               <Input
                 name="title"
+                ref={titleRef}
                 id="title"
                 type="text"
                 placeholder="Enter title"
@@ -76,7 +89,7 @@ export function NewsCard() {
                   Forgot your password?
                 </a> */}
               </div>
-              <Textarea name="news" placeholder="Type your message here." />
+              <Textarea name="news" placeholder="Type your message here." required/>
             </div>
           </div>
         </form>

@@ -34,10 +34,11 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-    const filepath: string = "https://www.nseindia.com/api/historicalOR/cm/equity?symbol=TATACONSUM&series=[%22EQ%22]&from=24-09-2024&to=24-09-2025&json=true";
+    const FILE_URL = process.env.URL;
+    const filepath: string = `${FILE_URL}`;
     const response = await fetch(filepath)
     const jsondata = await response.json();
     // console.log(csvdata);
-    await writeFile("./_data/check.json", JSON.stringify(jsondata));
+    await writeFile("./_data/quotes.json", JSON.stringify(jsondata));
     return new Response(JSON.stringify({message: "data fetched"}));
 }

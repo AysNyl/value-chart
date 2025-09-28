@@ -23,14 +23,21 @@ interface Data {
   CH_TOTAL_TRADES: number,
   CH_52WEEK_HIGH_PRICE: number,
   CH_52WEEK_LOW_PRICE: number,
-  new: string,
+  news: string,
   indicator: number;
 };
 
+interface Analysis {
+  relevancy_analysis: string,
+  relevancy_score: number
+}
+
 interface News {
+  id: string,
   date: string,
-  change: number,
-  event: string,
+  title: string,
+  text: string,
+  analysis: Analysis[]
 };
 
 async function getData(): Promise<[Promise<Data[]>, Promise<News[]>]> {
@@ -38,11 +45,15 @@ async function getData(): Promise<[Promise<Data[]>, Promise<News[]>]> {
   const news = await fetch('http://localhost:5000/news');
   const result = await quotes.json()
   const result1 = await news.json()
-  result.forEach((quote) => {
-    const matchingDate = result1.find(news => news.date == quote.CH_TIMESTAMP);
+
+  const minPrice = Math.min(...result.flatMap((item: Data) => [item.CH_CLOSING_PRICE]));
+  const maxPrice = Math.max(...result.flatMap((item: Data) => [item.CH_CLOSING_PRICE]));
+  result.forEach((quote: Data) => {
+    const matchingDate = result1.find((news: News) => news.date == quote.CH_TIMESTAMP);
+    console.log(matchingDate)
     if (matchingDate) {
-      quote.news = matchingDate.news;
-      quote.indicator = quote.CH_CLOSING_PRICE;
+      quote.news = matchingDate.text;
+      quote.indicator = matchingDate.analysis[0].relevancy_score*(maxPrice-minPrice)+minPrice+10;
     }
     else {
       quote.news = "";
@@ -50,7 +61,8 @@ async function getData(): Promise<[Promise<Data[]>, Promise<News[]>]> {
     }
   })
   // console.log(result);
+  result.sort((a: Data, b: Data) => a.CH_TIMESTAMP.localeCompare(b.CH_TIMESTAMP))
   return [result, result1];
 }
 
-export default getData;
+export {type Data, type News, getData};

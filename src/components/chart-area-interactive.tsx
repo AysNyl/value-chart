@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
-import getData from "@/lib/chart-data"
+import { getData } from "@/lib/chart-data"
 import { YAxis } from "recharts"
 
 import {
